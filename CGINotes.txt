@@ -1,0 +1,10 @@
+-	CGI needs env variables from the config file like:
+	METHOD = 
+	SCRIPT_PATH =
+	CONTENT_LENGTH =
+	etc (need to figure out what i need)
+-	Need the filepath
+-	We should put a folder with scripts in the webserv repo
+-	Think we should make a request class for parsing every client request. 
+	If there is a script we pass the request to CGIHandler
+-	
