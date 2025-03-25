@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiTest.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:10:01 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/24 18:06:50 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:10:18 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <map>
 # include <unistd.h>
 # include <sys/wait.h>
+#include <signal.h>
 
 # define TIMEOUT 5000
 
@@ -31,8 +32,8 @@ class CgiTest
 	
 	public:
 		CgiTest();
-		CgiTest(const CgiTest &other);
-		CgiTest& operator=(const CgiTest &other);
+		// CgiTest(const CgiTest &other);
+		// CgiTest& operator=(const CgiTest &other);
 		~CgiTest();
 
 		std::string	executeCGI();

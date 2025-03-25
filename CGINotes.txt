@@ -2,7 +2,7 @@
 	METHOD = 
 	SCRIPT_PATH =
 	CONTENT_LENGTH =
-	etc (need to figure out what i need)
+	etc (need to figure out what i need and why)
 -	Need the filepath
 -	We should put a folder with scripts in the webserv repo
 -	Think we should make a request class for parsing every client request. 

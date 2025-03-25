@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiTest.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:09:57 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/24 18:11:46 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:36:03 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 CgiTest::CgiTest()
 {
+	_cgiPath = (char *)"a.outt";
 	_exitStatus = 0;
 	_cgiPid = -1;
-	
+	_args = nullptr;
+	_env = nullptr;
 }
 
 CgiTest::~CgiTest()
 {
 }
 
-CgiTest::CgiTest(const CgiTest &other)
-{
-}
+// CgiTest::CgiTest(const CgiTest &other)
+// {
+// }
 
-CgiTest&	CgiTest::operator=(const CgiTest &other)
-{
-}
+// CgiTest&	CgiTest::operator=(const CgiTest &other)
+// {
+// }
 
 std::string	CgiTest::executeCGI()
 {
@@ -41,11 +43,17 @@ std::string	CgiTest::executeCGI()
 	size_t		bytesRead;
 
 	if (pipe(pipeFD) == -1)
+	{
 		perror("pipe");
+		return (nullptr);
+	}
 	
 	_cgiPid = fork();
 	if (_cgiPid == -1)
+	{
 		perror("fork"); // dont know what to do in this case yet
+		return (nullptr);
+	}
 
 	if (_cgiPid == 0)
 	{
@@ -73,7 +81,7 @@ std::string	CgiTest::executeCGI()
 	}
 	while((bytesRead = read(pipeFD[0], buffer, sizeof(buffer) -1)) > 0)
 	{
-		buffer[bytesRead] = '/0';
+		buffer[bytesRead] = '\0';
 		cgiOutput += buffer;
 	}
 	if (bytesRead == -1)
