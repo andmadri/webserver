@@ -6,7 +6,7 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:09:57 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/25 15:36:03 by marieke          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:25:05 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ std::string	CgiTest::executeCGI()
 		buffer[bytesRead] = '\0';
 		cgiOutput += buffer;
 	}
+	close(pipeFD[0]);
 	if (bytesRead == -1)
 		perror("read failed");
 	return (cgiOutput);
