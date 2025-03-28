@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 15:09:15 by marieke           #+#    #+#             */
-/*   Updated: 2025/03/28 15:10:52 by marieke          ###   ########.fr       */
+/*   Created: 2025/03/28 16:10:44 by marieke           #+#    #+#             */
+/*   Updated: 2025/03/28 16:11:38 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "CgiTest.hpp"
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
-using namespace std;
+# include <iostream>
 
-int main(void)
-{
-	CgiTest	test;
+char	**vecToArray(std::vector<std::string> vec);
+void	freeArray(char **array);
 
-	cout << test.executeCGI() << endl;
-}
+#endif
