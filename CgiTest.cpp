@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiTest.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:09:57 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/28 21:01:00 by marieke          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:40:02 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,19 @@ CgiTest::CgiTest()
 	setArgs();
 	if (!_args)
 		return ; //error handling
-	//_execPath = ; need to split getenv("PATH") and check for access()
-	_env = nullptr;
+	_execPath = getExecPath();
+	if (!_execPath)
+	{
+		freeArray(_args);
+		return ; //error handling
+	}
+	_env = nullptr; //need to do something with this
 }
 
 CgiTest::~CgiTest()
 {
+	freeArray(_args);
+	free(_execPath);
 }
 
 // CgiTest::CgiTest(const CgiTest &other)
@@ -56,7 +63,29 @@ void	CgiTest::setArgs()
 	_args = vecToArray(argsv);
 }
 
+char	*CgiTest::getExecPath()
+{
+	char						*execPath;
+	char						*pathStr;
+	std::vector <std::string>	pathVec;
 
+	pathStr = getenv("PATH"); // can we use this?
+	if (!pathStr)
+		return (nullptr); //error handling
+	pathVec = vecSplit(pathStr, ':');
+	for (std::string str : pathVec)
+	{
+		str += "/" + (std::string)_args[0];
+		if (access(str.c_str(), X_OK) == 0)
+		{
+			execPath = strdup(str.c_str());
+			if (!execPath)
+				return (nullptr); // errorhandling sterror??
+			return (execPath); // i can just return execPath if allocation fails, will return nullptr anyway
+		}
+	}
+	return (nullptr);
+}
 
 std::string	CgiTest::executeCGI()
 {
@@ -85,7 +114,7 @@ std::string	CgiTest::executeCGI()
 		dup2( pipeFD[1], STDOUT_FILENO);
 		close(pipeFD[0]);
 		close(pipeFD[1]);
-		execve("/opt/homebrew/bin/python3", _args, _env);
+		execve(_execPath, _args, _env);
 		perror("execve failure");
 		//didnt allocate anything here but in case i should free childs memory first
 		exit(EXIT_FAILURE);

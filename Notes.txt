@@ -1,0 +1,41 @@
+CGI
+-	CGI needs env variables from the config file like:
+	METHOD = 
+	SCRIPT_PATH =
+	CONTENT_LENGTH =
+	etc (need to figure out what i need and why)
+-	Need the filepath
+-	We should put a folder with scripts in the webserv repo
+-	Think we should make a request class for parsing every client request. 
+	If there is a script we pass the request to CGIHandler
+
+NginX
+-	command nginx -t to check for syntax error in configuration file
+-	key - value pairs in .conf are called directives.
+
+	directives:
+		- listen 8080
+		(listen on this port)
+
+		- root /filepath
+		(server will search in this directory for index.html file)
+
+		- location /filepath
+			root : filepath
+		(server will append location to root)
+
+		- location /filepath
+			alias : filepath
+		(server will serve alias filepath when /location is requested)
+
+		- location /filepath
+			try_files /filepath/ else use filepath = 404
+		(server will try file if it exists / try this instead = return error)
+
+		- location /filepath
+			return 307 /filepath2
+		(will redirect to filepath2)
+
+Other
+-	we should indeed already have a root directory in the webserv repo
+-	multiple servers -- maybe use round robin approach???

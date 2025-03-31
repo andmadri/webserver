@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CgiTest.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:10:01 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/28 16:28:57 by marieke          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:34:56 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <map>
+# include <vector>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -40,6 +41,7 @@ class CgiTest
 		~CgiTest();
 
 		void		setArgs();
+		char		*getExecPath();
 		std::string	executeCGI();
 
 };

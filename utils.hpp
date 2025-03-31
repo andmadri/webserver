@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:10:44 by marieke           #+#    #+#             */
-/*   Updated: 2025/03/28 16:11:38 by marieke          ###   ########.fr       */
+/*   Updated: 2025/03/31 13:34:45 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define UTILS_HPP
 
 # include <iostream>
+# include <vector>
+# include <cstring>
+# include <sstream>
 
-char	**vecToArray(std::vector<std::string> vec);
-void	freeArray(char **array);
+char						**vecToArray(std::vector<std::string> vec);
+std::vector<std::string>	vecSplit(char *str, char delim);
+void						freeArray(char **array);
 
 #endif
