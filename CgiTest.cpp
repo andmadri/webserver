@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:09:57 by maraasve          #+#    #+#             */
-/*   Updated: 2025/03/31 13:40:02 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:58:22 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ std::string	CgiTest::executeCGI()
 	_cgiPid = fork();
 	if (_cgiPid == -1)
 	{
-		perror("fork"); // dont know what to do in this case yet
+		perror("fork"); // error handling
 		return (nullptr);
 	}
 
