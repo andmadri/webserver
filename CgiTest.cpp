@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:09:57 by maraasve          #+#    #+#             */
-/*   Updated: 2025/04/02 11:58:22 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:29:53 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ std::string	CgiTest::executeCGI()
 	if (_cgiPid == 0)
 	{
 		dup2( pipeFD[1], STDOUT_FILENO);
+		dup2( pipeFD[0], STDIN_FILENO);
 		close(pipeFD[0]);
 		close(pipeFD[1]);
 		execve(_execPath, _args, _env);
