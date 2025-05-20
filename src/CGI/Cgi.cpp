@@ -102,7 +102,6 @@ void Cgi::handleOutgoing()
 		if (bytes > 0)
 		{
 			_body.erase(0, bytes);
-			std::cout << "CGI: SENDING_BODY" << std::endl;
 		}
 		else if (bytes < 0)
 		{
@@ -118,7 +117,7 @@ void Cgi::handleOutgoing()
 		onCgiPipeDone(_writeToChild[1]);
 		close(_writeToChild[1]);
 		_writeToChild[1] = -1;
-		std::cout << "CGI: WRITE DONE!" << std::endl;
+		std::cout << "CGI: SENDING BODY DONE!" << std::endl;
 	}
 }
 

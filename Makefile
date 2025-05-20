@@ -1,7 +1,7 @@
 NAME = webserv
 CPP = c++
 CPPFLAGS_BASE = -Wall -Werror -Wextra -std=c++17 -MMD -fPIE
-DEBUGFLAGS = -fno-limit-debug-info -g3
+DEBUGFLAGS = -g3
 LDFLAGS = -lstdc++fs
 RM = rm -rf
 

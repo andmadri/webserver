@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:06:22 by maraasve          #+#    #+#             */
-/*   Updated: 2025/05/14 17:31:08 by maraasve         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:10:04 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,33 @@ Client::~Client()
 
 void Client::handleIncoming()
 {
-	auto now = std::chrono::steady_clock::now();
-	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - _startTime).count();
-	std::cerr << "ELAPSED TIME: " << elapsed << std::endl;
-	if (elapsed >= TIMEOUT)
-	{
-		closeClientConnection(_fd);
-		return;
-	}
+	// auto now = std::chrono::steady_clock::now();
+	// auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - _startTime).count();
+	// if (elapsed >= TIMEOUT)
+	// {
+	// 	closeClientConnection(_fd);
+	// 	return;
+	// }
 	switch (_state)
 	{
-	case clientState::READING_HEADERS:
-		handleHeaderState();
-		break;
-	case clientState::READING_BODY:
-		handleBodyState();
-		break;
-	case clientState::PARSING_CHECKS:
-		handleParsingCheckState();
-		break;
-	case clientState::CGI:
-		handleCgiState();
-		break;
-	case clientState::ERROR:
-		handleErrorState();
-		break;
-	case clientState::RESPONDING:
-		handleResponseState();
-		break;
+		case clientState::READING_HEADERS:
+			handleHeaderState();
+			break;
+		case clientState::READING_BODY:
+			handleBodyState();
+			break;
+		case clientState::PARSING_CHECKS:
+			handleParsingCheckState();
+			break;
+		case clientState::CGI:
+			handleCgiState();
+			break;
+		case clientState::ERROR:
+			handleErrorState();
+			break;
+		case clientState::RESPONDING:
+			handleResponseState();
+			break;
 	}
 }
 
@@ -61,7 +60,6 @@ void Client::handleOutgoing()
 	std::cout << "\n\t----Handle Outgoing-- " << std::endl;
 	auto now = std::chrono::steady_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - _startTime).count();
-	std::cerr << "ELAPSED TIME: " << elapsed << std::endl;
 	if (elapsed >= TIMEOUT) 
 	{
 		closeClientConnection(_fd);
@@ -72,7 +70,7 @@ void Client::handleOutgoing()
 	{
 		_responseString.erase(0, bytes);
 	}
-	else if (_responseString.empty() && closeClientConnection)
+	else if ((_responseString.empty() && closeClientConnection) || bytes <= 0)
 	{
 		closeClientConnection(_fd);
 	}
@@ -106,10 +104,9 @@ void Client::handleHeaderState()
 		if (_requestParser.getState() == requestState::PARSING_BODY)
 		{
 			_state = clientState::READING_BODY;
-			handleIncoming();
-			return;
+			_requestParser.parseBody(_requestString, 0);
 		}
-		else if (_requestParser.getState() == requestState::COMPLETE)
+		if (_requestParser.getState() == requestState::COMPLETE)
 		{
 			_state = clientState::PARSING_CHECKS;
 			handleIncoming();
@@ -258,7 +255,6 @@ void Client::handleCgiState()
 	}
 	auto now = std::chrono::steady_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - _startTimeCgi).count();
-	std::cerr << "ELAPSED TIME: " << elapsed << std::endl;
 	if (elapsed >= TIMEOUT_CGI) 
 	{
 		kill(_Cgi->getPid(), SIGQUIT);
